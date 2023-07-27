@@ -1,25 +1,16 @@
-import { Alchemy, Network } from 'alchemy-sdk';
+import alchemy from '@/lib/alchemy';
 
-const settings = {
-  apiKey: process.env.ALCHEMY_API_KEY,
-  network: Network.ETH_MAINNET,
-};
-
-// In this week's lessons we used ethers.js. Here we are using the
-// Alchemy SDK is an umbrella library with several different packages.
-//
-// You can read more about the packages here:
-// https://docs.alchemy.com/reference/alchemy-sdk-api-surface-overview#api-surface
-const alchemy = new Alchemy(settings);
-
-async function getBlockNumber() {
-  return await alchemy.core.getBlockNumber();
-}
+import LatestBlocks from '@/components/LatestBlocks';
 
 export default async function Home() {
-  const blockNumber = await getBlockNumber();
+  const lastMinedBlockNumber = await alchemy.core.getBlockNumber();
   
   return (
-    <main className='flex justify-center'>Block Number: {blockNumber}</main>
+    <main className='flex flex-col h-screen px-4 sm:px-6 lg:px-8'>
+      <div>
+        Last Mined Block: {lastMinedBlockNumber}
+      </div>
+      <LatestBlocks lastMinedBlock={lastMinedBlockNumber} />
+    </main>
   )
 }
