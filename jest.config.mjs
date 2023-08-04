@@ -9,8 +9,10 @@ const createJestConfig = nextJest({
 /** @type {import('jest').Config} */
 const config = {
   // Add more setup options before each test is run
-  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
- 
+  moduleNameMapper: {
+    '@/components/(.*)': '<rootDir>/src/components/$1',
+  },
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
 }
  

@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 
 import alchemy from '@/lib/alchemy'
@@ -8,31 +7,25 @@ import LatestBlocks from './LatestBlocks'
 
 const lastMinedBlockNumber = 123
 
-jest.mock('alchemy-sdk', () => {
-    return {
-        Alchemy: jest.fn().mockImplementation(() => {
-            return {
-                core: {
-                    getBlock: jest.fn().mockImplementation((blockNumber) => {
-                        const block = {
-                            hash: `0x${blockNumber}`,
-                            number: blockNumber,
-                            timestamp: blockNumber,
-                            miner: `0x${blockNumber}`,
-                            transactions: Array.from({ length: blockNumber }),
-                            gasUsed: '15000',
-                            gasLimit: '30000'
-                        }
-                        return Promise.resolve(block)
-                    })
+jest.mock('alchemy-sdk', () => ({
+    ...jest.requireActual('alchemy-sdk'),
+    Alchemy: jest.fn(() => ({
+        core: {
+            getBlock: jest.fn((blockNumber) => {
+                const block = {
+                    hash: `0x${blockNumber}`,
+                    number: blockNumber,
+                    timestamp: blockNumber,
+                    miner: `0x${blockNumber}`,
+                    transactions: Array.from({ length: blockNumber }),
+                    gasUsed: '15000',
+                    gasLimit: '30000'
                 }
-            }
-        }),
-        Network: {
-            ETH_MAINNET: 'ETH_MAINNET'
+                return Promise.resolve(block)
+            })
         }
-    }
-})
+    }))
+}))
 
 describe('LatestBlocks', () => {
     afterEach(() => {

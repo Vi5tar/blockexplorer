@@ -1,5 +1,6 @@
 import alchemy from '@/lib/alchemy'
 import moment from 'moment'
+import truncateString from '@/utils/format'
 
 export default async function LatestBlocks({ lastMinedBlock }) {
     const calculatePercentFromGasTarget = (block) => {
@@ -45,7 +46,7 @@ export default async function LatestBlocks({ lastMinedBlock }) {
                                             </div>
                                         </td>
                                         <td className="w-1/3 px-3 py-5 text-sm text-gray-500 whitespace-nowrap">
-                                            <div className="text-gray-900">{`Miner ${block.miner}`}</div>
+                                            <div className="text-gray-900">{`Miner ${truncateString(block.miner, {length: 18})}`}</div>
                                             <div className="mt-1 text-gray-500">{`${block.transactions.length} txns`}</div>
                                         </td>
                                         <td className="w-1/3 px-3 py-5 text-sm text-gray-500 whitespace-nowrap">

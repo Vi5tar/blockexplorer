@@ -1,6 +1,7 @@
 import alchemy from '@/lib/alchemy';
 
 import LatestBlocks from '@/components/LatestBlocks';
+import LatestTransactions from '@/components/LatestTransactions';
 
 export default async function Home() {
   const lastMinedBlockNumber = await alchemy.core.getBlockNumber();
@@ -10,7 +11,10 @@ export default async function Home() {
       <div>
         Last Mined Block: {lastMinedBlockNumber}
       </div>
-      <LatestBlocks lastMinedBlock={lastMinedBlockNumber} />
+      <div className='grid grid-cols-2 gap-4'>
+        <LatestBlocks lastMinedBlock={lastMinedBlockNumber} />
+        <LatestTransactions lastMinedBlock={lastMinedBlockNumber} />
+      </div>
     </main>
   )
 }
