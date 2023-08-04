@@ -6,22 +6,16 @@ import LatestTransactions from '@/components/LatestTransactions'
 
 const lastMinedBlockNumber = 123
 
-jest.mock('alchemy-sdk', () => {
-    return {
-        Alchemy: jest.fn().mockImplementation(() => {
-            return {
-                core: {
-                    getBlockNumber: jest.fn().mockImplementation(() => {
-                        return lastMinedBlockNumber
-                    })
-                }
-            }
-        }),
-        Network: {
-            ETH_MAINNET: 'ETH_MAINNET'
+jest.mock('alchemy-sdk', () => ({
+    ...jest.requireActual('alchemy-sdk'),
+    Alchemy: jest.fn(() => ({
+        core: {
+            getBlockNumber: jest.fn().mockImplementation(() => {
+                return lastMinedBlockNumber
+            })
         }
-    }
-})
+    }))
+}))
 
 jest.mock(...component('@/components/LatestBlocks'))
 jest.mock(...component('@/components/LatestTransactions'))
@@ -34,13 +28,13 @@ describe('Home', () => {
 
     it('renders LatestBlocks component', async () => {
         render(await Home())
-        expect(LatestBlocks.mock).toHaveBeenCalledWith({lastMinedBlock: lastMinedBlockNumber})
+        expect(LatestBlocks.mock).toHaveBeenCalledWith({ lastMinedBlock: lastMinedBlockNumber })
         expect(screen.getByTestId(LatestBlocks.testId)).toBeInTheDocument()
     })
 
     it('renders LatestTransactions component', async () => {
         render(await Home())
-        expect(LatestTransactions.mock).toHaveBeenCalledWith({lastMinedBlock: lastMinedBlockNumber})
+        expect(LatestTransactions.mock).toHaveBeenCalledWith({ lastMinedBlock: lastMinedBlockNumber })
         expect(screen.getByTestId(LatestTransactions.testId)).toBeInTheDocument()
     })
 })
