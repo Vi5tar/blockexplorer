@@ -10,7 +10,7 @@ jest.mock('alchemy-sdk', () => ({
     ...jest.requireActual('alchemy-sdk'),
     Alchemy: jest.fn(() => ({
         core: {
-            getBlockNumber: jest.fn().mockImplementation(() => {
+            getBlockNumber: jest.fn(() => {
                 return lastMinedBlockNumber
             })
         }

@@ -40,7 +40,11 @@ export default async function LatestBlocks({ lastMinedBlock }) {
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                                                 </svg>
                                                 <div>
-                                                    <div className="font-medium text-gray-900">{block.number}</div>
+                                                    <div className="font-medium text-gray-900">
+                                                        <a href={`block/${block.number}`}>
+                                                            {block.number}
+                                                        </a>
+                                                    </div>
                                                     <div className="mt-1 text-gray-500">{moment.unix(block.timestamp).fromNow()}</div>
                                                 </div>
                                             </div>
