@@ -38,7 +38,7 @@ describe('Block', () => {
         expect(alchemy.core.getBlock).toHaveBeenCalledWith(blockNumber)
     })
     it('throws NEXT_NOT_FOUND error if block does not exist', async () => {
-        expect.assertions(1)
+        expect.hasAssertions()
         try {
             render(await Block({ params: { blockNumber: blockNumber + 1 } }))
         } catch (e) {
